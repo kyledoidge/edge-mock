@@ -10,7 +10,6 @@ const DEFAULT_HEADERS = {
 const MethodStrings = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'] as const
 export type Method = typeof MethodStrings[number]
 
-
 export class EdgeRequest extends EdgeBody implements Request {
   readonly url: string
   readonly method: Method

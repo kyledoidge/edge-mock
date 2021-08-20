@@ -8,7 +8,7 @@ import {
   EdgeHeaders,
   EdgeReadableStream,
   EdgeCacheStorage,
-  EdgeCache
+  EdgeCache,
 } from './models'
 import fetch from './live_fetch'
 
@@ -78,7 +78,7 @@ const mock_types = {
   ReadableStream: EdgeReadableStream,
   fetch: fetch,
   CacheStorage: EdgeCacheStorage,
-  Cache: EdgeCache
+  Cache: EdgeCache,
 }
 
 const globalVariables = {
