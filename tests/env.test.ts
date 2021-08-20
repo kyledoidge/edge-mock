@@ -1,4 +1,5 @@
 import {makeEdgeEnv} from 'edge-mock'
+import stub_fetch from 'edge-mock/stub_fetch'
 
 async function handleRequest(event: FetchEvent) {
   const {request, type} = event
@@ -13,14 +14,14 @@ async function handleRequest(event: FetchEvent) {
 
 describe('makeEdgeEnv', () => {
   test('basic', async () => {
-    const env = makeEdgeEnv()
+    const env = makeEdgeEnv({fetch: stub_fetch})
 
     expect(env.getListener).toThrow('FetchEvent listener not yet added via addEventListener')
     addEventListener('fetch', e => {
       e.respondWith(handleRequest(e))
     })
     expect(typeof env.getListener()).toEqual('function')
-    const request = new Request('/bar/', {method: 'POST', body: 'testing'})
+    const request = new Request('https://example.com/bar/', {method: 'POST', body: 'testing'})
     const event = new FetchEvent('fetch', {request})
     env.dispatchEvent(event)
     const response: Response = await (event as any)._response

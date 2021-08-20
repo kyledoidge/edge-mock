@@ -10,6 +10,7 @@ const DEFAULT_HEADERS = {
 const MethodStrings = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'] as const
 export type Method = typeof MethodStrings[number]
 
+
 export class EdgeRequest extends EdgeBody implements Request {
   readonly url: string
   readonly method: Method
@@ -54,7 +55,7 @@ export class EdgeRequest extends EdgeBody implements Request {
     const boundary = findBoundary(headers, init?.body)
     super(init?.body, boundary)
     this.headers = headers
-    this.url = 'https://example.com' + url
+    this.url = url
     this.method = method
     this.mode = init?.mode || 'same-origin'
     this.cache = init?.cache || 'default'
