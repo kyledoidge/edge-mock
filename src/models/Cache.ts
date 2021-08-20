@@ -1,4 +1,4 @@
-import live_fetch from 'edge-mock/live_fetch'
+import live_fetch from '../live_fetch'
 import LRUCache from 'lru-cache'
 import {EdgeRequest} from './Request'
 

@@ -1,7 +1,7 @@
 {
-  "name": "edge-mock",
+  "name": "fake-service-worker",
   "version": "0.0.16",
-  "description": "types for testing an developer edge applications",
+  "description": "Fake service worker implementation for testing developer edge applications",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
@@ -25,7 +25,9 @@
     "all": "yarn lint && yarn test"
   },
   "author": "Samuel Colvin",
-  "contributors": ["Kyle Doidge"],
+  "contributors": [
+    "Kyle Doidge"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/kyledoidge/edge-mock",
   "private": false,

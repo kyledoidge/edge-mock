@@ -6,3 +6,5 @@
 /ts-build/
 /coverage/
 /test-build/
+*.tgz
+*.tar.gz
