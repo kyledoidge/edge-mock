@@ -7,8 +7,10 @@ import {
   EdgeFetchEvent,
   EdgeHeaders,
   EdgeReadableStream,
+  EdgeCacheStorage,
+  EdgeCache
 } from './models'
-import stub_fetch from './stub_fetch'
+import fetch from './live_fetch'
 
 export {
   EdgeRequest,
@@ -19,7 +21,9 @@ export {
   EdgeFetchEvent,
   EdgeHeaders,
   EdgeReadableStream,
-  stub_fetch,
+  EdgeCacheStorage,
+  EdgeCache,
+  fetch,
 }
 export {EdgeKVNamespace} from './kv_namespace'
 
@@ -72,11 +76,17 @@ const mock_types = {
   File: EdgeFile,
   FormData: EdgeFormData,
   ReadableStream: EdgeReadableStream,
-  fetch: stub_fetch,
+  fetch: fetch,
+  CacheStorage: EdgeCacheStorage,
+  Cache: EdgeCache
+}
+
+const globalVariables = {
+  caches: new EdgeCacheStorage(),
 }
 
 export function makeEdgeEnv(extra: Record<string, any> = {}): EdgeEnv {
   const env = new EdgeEnv()
-  Object.assign(global, mock_types, {addEventListener: env.addEventListener}, extra)
+  Object.assign(global, mock_types, globalVariables, {addEventListener: env.addEventListener}, extra)
   return env
 }

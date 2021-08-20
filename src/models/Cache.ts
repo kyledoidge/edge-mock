@@ -1,7 +1,6 @@
+import live_fetch from "edge-mock/live_fetch"
 import LRUCache from "lru-cache"
 import {EdgeRequest} from "./Request"
-import {EdgeResponse} from "./Response"
-import fetch, {Request as NodeRequest} from "node-fetch"
 
 export type CacheQueryOptions = {
   ignoreMethod?: boolean | undefined; // Allow more than just GET or HEAD requests
@@ -27,22 +26,14 @@ export class EdgeCache implements Cache {
   /** Fetches url and caches it */
   async add(request: RequestInfo): Promise<void> {
     const key = this.getKey(request)
-    let requestObj = new NodeRequest(key)
-    requestObj = Object.assign(requestObj, request)
-    const res = await fetch(requestObj)
-    const headers: Record<string, string> = {}
-    res.headers.forEach((value: string, name: string) => {
-      headers[name] = value
-    })
-    const edgeRes = new EdgeResponse(await res.arrayBuffer(), 
-      {headers, status: res.status, statusText: res.statusText})
-    this.cache.set(key, edgeRes)
+    const res = await live_fetch(key)
+    this.cache.set(key, res)
   }
 
   async addAll(requests: RequestInfo[]): Promise<void> {
-    requests.forEach((request) => {
-      this.add(request)
-    })
+    for(let i = 0; i < requests.length; i++) {
+      await this.add(requests[i])
+    }
   }
   async delete(request: RequestInfo, options?: CacheQueryOptions): Promise<boolean> {
     const key = this.getKey(request)
