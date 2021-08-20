@@ -44,6 +44,9 @@ _edge-mock_ provides the following types (all available to import from `edge-moc
   [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) interface
 * `EdgeKVNamespace` - in memory implementation of CloudFlare's 
   [KVNamespace](https://developers.cloudflare.com/workers/runtime-apis/kv)
+* `EdgeCache` - in memory implementation of ServiceWorker Cache using lru-cache
+* `EdgeCacheStorage` - in memory implementation of ServiceWorker CacheStorage. `makeEdgeEnv()` inserts a `new EdgeCacheStorage()` as the global `caches` object
+* `live_fetch` - makes use of node-fetch to replicate fetch behaviour in node
 * `stub_fetch` - a very simple mock for 
   [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) which returns `200`
   for requests to `https://example.com/` and `404` for all other requests
