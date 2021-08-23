@@ -17,7 +17,7 @@ jobs:
 
     - uses: actions/setup-node@v2
       with:
-        node-version: '14.x'
+        node-version: '14.15.3'
 
     - run: yarn
     - run: yarn test --coverage
@@ -32,7 +32,7 @@ jobs:
 
     - uses: actions/setup-node@v2
       with:
-        node-version: '14.x'
+        node-version: '14.15.3'
 
     - run: yarn
     - run: yarn lint
@@ -50,7 +50,7 @@ jobs:
 
     - uses: actions/setup-node@v2
       with:
-        node-version: '14.x'
+        node-version: '14.15.3'
         registry-url: 'https://registry.npmjs.org'
 
     - run: npm install

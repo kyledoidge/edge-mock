@@ -14,6 +14,7 @@ export class EdgeResponse extends EdgeBody implements Response {
   readonly url: string
   readonly _extra?: any
 
+  // @ts-ignore
   constructor(body?: BodyInit | null, init: ResponseInit = {}, url = 'https://example.com', extra?: any) {
     const headers = asHeaders(init.headers)
     const boundary = findBoundary(headers, body)

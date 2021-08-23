@@ -1,32 +1,34 @@
-# edge-mock
+# fake-service-worker
 
-[![ci](https://github.com/samuelcolvin/edge-mock/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/samuelcolvin/edge-mock/actions?query=branch%3Amain)
-[![codecov](https://codecov.io/gh/samuelcolvin/edge-mock/branch/main/graph/badge.svg)](https://codecov.io/gh/samuelcolvin/edge-mock)
+[![ci](https://github.com/kyledoidge/fake-service-worker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kyledoidge/fake-service-worker/actions?query=branch%3Amain)
+
+
+This is a fork of Samuel Colvin's edge-mock repository seen here: https://github.com/samuelcolvin/edge-mock
 
 Tools for developing and testing edge service workers, in particular CloudFlare workers.
 
-_edge-mock_ provides three things:
+_fake-service-worker_ provides three things:
 1. Implementations for types used in service-workers, e.g. `Request`, `Respones`, `FetchEvent` `ReadableStream` etc.
 2. A function `makeEdgeEnv` for installing these types into the global namespace for use in unit tests
 3. A simple HTTP server based on `express.js` which lets you run your service-worker based app locally for development
 
-You can consider _edge-mock_ as implementing the most commonly used types declare in the
+You can consider _fake-service-worker_ as implementing the most commonly used types declare in the
 [`@cloudflare/workers-types`](https://www.npmjs.com/package/@cloudflare/workers-types) typescript types package.
 
-While _edge-mock_ is designed to be useful when developing 
+While _fake-service-worker_ is designed to be useful when developing 
 [CloudFlare worker](https://developers.cloudflare.com/workers/) applications, it should be usable while developing
 any service-worker app including for (future) alternative edge worker implementations.
 
-_edge-mock_ is written in TypeScript and while you may be able to use it from vanilla javascript projects, you'd be
+_fake-service-worker_ is written in TypeScript and while you may be able to use it from vanilla javascript projects, you'd be
 better off writing your code in TypeScript!
 
 ## Install
 
-    [npm/yarn] add edge-mock
+    [npm/yarn] add fake-service-worker
 
 ## Usage
 
-_edge-mock_ provides the following types (all available to import from `edge-mock`):
+_fake-service-worker_ provides the following types (all available to import from `fake-service-worker`):
 
 * `EdgeRequest` - implements the [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) interface
   of the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), with the addition of the
@@ -54,7 +56,7 @@ _edge-mock_ provides the following types (all available to import from `edge-moc
   used in worker scripts; types are installed into global by the name of the type they shadow, e.g. `EdgeRequest`
   is assigned to `global` as `Request`
 
-There's also `fetch_live` (import with `import live_fetch from 'edge-mock/live_fetch'`) which is an implementation
+There's also `fetch_live` (import with `import live_fetch from 'fake-service-worker/live_fetch'`) which is an implementation
 of `fetch` which makes actual http requests using `node-fetch`. It is installed by default instead of
 `stub_fetch` in the dev server, see below.
 
@@ -63,7 +65,7 @@ only implementations. They are not designed for production use or with large pay
 
 ### Example of Usage for unit testing
 
-_edge-mock_ works well with [jest](https://jestjs.io/) to make writing unit tests for edge workers delightful.
+_fake-service-worker_ works well with [jest](https://jestjs.io/) to make writing unit tests for edge workers delightful.
 
 Let's say you have the following `handler.ts` with a function `handleRequest` that you want to test:
 
@@ -93,7 +95,7 @@ export async function handleRequest(event: FetchEvent): Promise<Response> {
 To test the above `handleRequest` function, you could use the following:
 
 ```ts
-import {makeEdgeEnv} from 'edge-mock'
+import {makeEdgeEnv} from 'fake-service-worker'
 import {handleRequest} from '../src/handle.ts'
 
 describe('handleRequest', () => {
@@ -129,13 +131,13 @@ To run the server, add the following to the `scripts` section of `package.json`:
 ```json
   ...
   "scripts": {
-    "dev": "edge-mock-server",
+    "dev": "fake-service-worker-server",
     ...
   },
   ...
 ```
 
-**TODO:** explain how `edge-mock-config.js` works.
+**TODO:** explain how `fake-service-worker-config.js` works.
 
 You can then run the dev server with:
 

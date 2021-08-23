@@ -27,6 +27,7 @@ export class EdgeRequest extends EdgeBody implements Request {
   readonly keepalive = false
   readonly referrerPolicy: ReferrerPolicy = ''
 
+  // @ts-ignore
   constructor(input: RequestInfo, init?: RequestInit) {
     let url: string
     if (typeof input == 'string') {
