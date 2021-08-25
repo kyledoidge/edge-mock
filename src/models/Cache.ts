@@ -23,11 +23,28 @@ export class EdgeCache implements Cache {
     return request.url
   }
 
+  getTTL (response: Response | Request): number {
+    let ttl = 100 // 100 seconds
+    let cacheControl: string | string[] | null = response.headers.get('cache-control')
+    if (cacheControl !== null) {
+      cacheControl = cacheControl.split(';').map(val => val.trim())
+      const maxAge = cacheControl.find(value => value.toLowerCase().includes('max-age'))
+      if (maxAge !== undefined) {
+        ttl = parseInt(maxAge.split('=')[1])
+      }
+    }
+    return ttl
+  }
+
   /** Fetches url and caches it */
   async add(request: RequestInfo): Promise<void> {
+    let ttl = 100
+    if (request instanceof Request) {
+      ttl = this.getTTL(request)
+    }
     const key = this.getKey(request)
     const res = await live_fetch(key)
-    this.cache.set(key, res)
+    this.cache.set(key, res, ttl * 1000)
   }
 
   async addAll(requests: RequestInfo[]): Promise<void> {
@@ -61,7 +78,8 @@ export class EdgeCache implements Cache {
     }
   }
   async put(request: RequestInfo, response: Response): Promise<void> {
+    const ttl = this.getTTL(response)
     const key = this.getKey(request)
-    this.cache.set(key, response)
+    this.cache.set(key, response, ttl * 1000)
   }
 }
